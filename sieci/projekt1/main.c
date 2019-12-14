@@ -12,6 +12,17 @@
 #include <ctype.h>
 #include <netdb.h>
 
+char *trim(char *s) {
+    char *ptr;
+    if (!s)
+        return NULL;   // handle NULL string
+    if (!*s)
+        return s;      // handle empty string
+    for (ptr = s + strlen(s) - 1; (ptr >= s) && isspace(*ptr); --ptr);
+    ptr[1] = '\0';
+    return s;
+}
+
 int main(void)
 {
     char ip_address[512] = "127.0.0.1";
@@ -50,8 +61,7 @@ int main(void)
     printf("file_path sent.\n");
 
     // TODO
-    // char *fs_name = file_path;
-    char* fs_name = "/Users/q/p/IMG_1084.jpeg";
+    char *fs_name = trim(file_path);
     char sdbuf[LENGTH];
     printf("Sending %s", fs_name);
     FILE *fs = fopen(fs_name, "rb");
