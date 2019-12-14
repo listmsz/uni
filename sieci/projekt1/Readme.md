@@ -3,7 +3,7 @@ Aplikacja pozwalająca na wczytanie obrazu na serwer, wprowadzenie ścieki docel
 
 Klient w trybie interaktywnym pyta uzytkowika o ściezkę obrazu, oraz ściekę docelową. Nic nie stoi na przeszkodzie, by przy niewielkich modyfikacjach jednym klientem wysłać folder obrazów, lub wczytać listę obrazów z argumentów.
 
-### wymagania
+### Wymagania projektu
 ##### W projekcie należy wykorzystać dwa różne narzędzia:
 ###### Interface gniazd BSD (język C, choć w szczególnych przypadkach, po uzgodnieniu z prowadzącym, mogą być wyjątki).
 - klient jest napisany w C
@@ -12,7 +12,7 @@ Klient w trybie interaktywnym pyta uzytkowika o ściezkę obrazu, oraz ściekę 
 ##### Jednym z elementów musi być przesyłanie większej ilości danych (np. zadanego przez użytkownika pliku).
 - wysyłane są zdjęcia
 ##### Co najmniej jedna strona połączenia musi obsługiwać wiele klientów (lub serwerów) jednocześnie.
-- serwer jest w stanie obsłzyc więcej niz 1 klienta
+- serwer jest w stanie obsłózyć więcej niz 1 klienta
 ##### Co najmniej jedna strona musi zawierać elementy interaktywności (tzn. sterowanie aplikacją podczas wykonania).
 - klient jest w stanie podać ściezki do pliku. Ich poprawnosć jest sprawdzana i w razie koniecznosci uzytkownik jest proszony o ponowne wpisane danych
 
@@ -24,7 +24,7 @@ Klient w trybie interaktywnym pyta uzytkowika o ściezkę obrazu, oraz ściekę 
 ### Uruchomienie serwera 
 Instrukcje budowania i uruchomienia w pliku Readme w folderze `server`
 
-### Wymagania
+### Wymagania środowiska
 Testowane na systemie macOS, powinno działać takze na Linuksie.
 
 ### Przykład działania
@@ -51,3 +51,9 @@ drwxr-xr-x+ 65 q  staff   2.0K 14 Dec 14:14 ..
 ```
 
 Obrazek stracił ponad 1.5MiB
+
+
+### Uzyte oprogramowanie:
+- Kod klienta bazuje na: https://www.linuxquestions.org/questions/programming-9/tcp-file-transfer-in-c-with-socket-server-client-on-linux-help-with-code-4175413995/
+- Kod serwera korzysta z seedu projektu mavenowego, tak by mozna było łatwo podpiąć zalezności
+- Kod serwera wykorzystuje https://tinypng.com/developers Tiny PNG z którym komunikuje się przez HTTP. 
