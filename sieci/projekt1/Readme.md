@@ -28,17 +28,19 @@ Instrukcje budowania i uruchomienia w pliku Readme w folderze `server`
 Testowane na systemie macOS, powinno działać takze na Linuksie.
 
 ### Przykład działania
-```➜  projekt1 git:(master) gcc -o main main.c && ./main
+```bash
+➜  projekt1 git:(master) gcc -o main main.c && ./main
 Connection established.
 Please provide local file path (jpeg/png, up to 10MiB)://Users/q/p/IMG_1084.jpeg
 file_path received.
 Please provide remote file path://Users/q/p/destination.jpeg
 file_path sent.
 Sending /Users/q/p/IMG_1084.jpegFile sent.%                                                               
-➜  projekt1 git:(master) ```
+➜  projekt1 git:(master)
+```
 
 Rezultat: 
-```
+```bash
 ➜  p ls -lah
 total 6800
 drwxr-xr-x   5 q  staff   160B 14 Dec 14:14 .
