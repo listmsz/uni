@@ -1,66 +1,79 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <string.h>
 #include <arpa/inet.h>
-#include <netdb.h>
-#include <sys/time.h>
-#include <dirent.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <ctype.h>
+#include <netdb.h>
 
-
-#define MAX_FILE_SIZE 10485760 /*10 MiB */
-
-int isFile(const char* fname)
+int main(void)
 {
-    DIR* directory = opendir(name);
-
-    if(directory != NULL)
-    {
-    closedir(directory);
-    return 0;
-    }
-
-    if(errno == ENOTDIR)
-    {
-    return 1;
-    }
-
-    return -1;
-}
-
-int exists(fname)
-{
-    FILE* file;
-    if (file = fopen(filename, "r")){
-    fclose(file);
-    return 1;
-    }
-    return 0;
-}
-
-int main(int argc, char **argv)
-{
-
-
-
-    struct sockaddr_in, myaddr;
+    char ip_address[512] = "127.0.0.1";
+    char file_path[1024];
+    char destination_file_path[1024];
+    struct sockaddr_in adr;
+    unsigned int port = 5000;
+    int LENGTH = 1024;
     int s;
-    char filePath[128];
 
-    myaddr.sin_family = AF_INET;
-    myaddr.sin_port = htons(5000);
-    myaddr.sin_addr.s_addr = htonl(127.0.0.1);
+    s = socket(PF_INET, SOCK_STREAM, 0);
+    adr.sin_family = AF_INET;
+    adr.sin_port = htons(port);
+    adr.sin_addr.s_addr = inet_addr(ip_address);
+    if (connect(s, (struct sockaddr *)&adr,
+                sizeof(adr)) < 0)
+    {
+        printf("Connection failed\n");
+        return 1;
+    }
+    printf("Connection established.\nPlease provide local file path (jpeg/png, up to 10MiB):");
+    fflush(stdout);
+    fgetc(stdin);
+    fgets(file_path, 1024, stdin);
+    printf("file_path received.\n");
 
-    printf("Would you mind providing a file path to an image you'd like to optimise, please? /n");
-    scanf("%127s", filePath);
+    printf("Please provide remote file path:");
+    fflush(stdout);
+    fgetc(stdin);
+    fgets(destination_file_path, 1024, stdin);
 
-    while(exists(fname) && isFile(fname) !=0){
+    int converted_number = htonl(strlen(destination_file_path));
+    write(s, &converted_number, sizeof(converted_number));
 
+    send(s, destination_file_path, strlen(destination_file_path), 0);
+    printf("file_path sent.\n");
+
+    // TODO
+    // char *fs_name = file_path;
+    char* fs_name = "/Users/q/p/IMG_1084.jpeg";
+    char sdbuf[LENGTH];
+    printf("Sending %s", fs_name);
+    FILE *fs = fopen(fs_name, "rb");
+    if (fs == NULL)
+    {
+        printf("File %s not found.\n", fs_name);
+        exit(1);
     }
 
+    bzero(sdbuf, LENGTH);
+    int fs_block_sz;
+    while ((fs_block_sz = fread(sdbuf, sizeof(char), LENGTH, fs)) > 0)
+    {
+        if (send(s, sdbuf, fs_block_sz, 0) < 0)
+        {
+            fprintf(stderr, "Failed to send file");
+            break;
+        }
+        bzero(sdbuf, LENGTH);
+    }
+    printf("File sent.");
 
+    close(s);
+    return 0;
 }

@@ -23,7 +23,7 @@ public class App {
     DataInputStream dis = new DataInputStream(socket.getInputStream());
     DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
-    String targetPath = "/";
+    String targetPath = "";
     int count = dis.readInt();
     byte[] bs = new byte[count];
     dis.read(bs);
@@ -34,19 +34,16 @@ public class App {
     }
 
     System.out.println(targetPath);
-    targetPath = targetPath.substring(0, count);
+    targetPath = targetPath.substring(0, count-1);
 
     FileOutputStream fos = new FileOutputStream(targetPath);
     DataOutputStream ftos = new DataOutputStream(fos);
 
     byte[] buffer = new byte[count];
-    int i = 0;
     while (dis.read(buffer) > 0) {
-      i++;
-      // skip first buffer item, so image path is not attached to the file 
-      if(i > 1) {
-        ftos.write(buffer);
-      }
+
+      ftos.write(buffer);
+
     }
 
     Source source = Tinify.fromFile(targetPath);
