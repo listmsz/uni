@@ -12,16 +12,15 @@ data Moto = Saab
             | Jeep
             | Mazda
             deriving (Show)
-data Kraj = Sweden | Germany | USA | UK | Japan
-     
+type Kraj = [Char]
+
 -- a
 getCarMarkByCountry :: Kraj -> Moto
-getCarMarkByCountry a = case a of
-                        Sweden -> Saab
-                        Germany -> Mercedes
-                        UK -> Lotus
-                        USA -> Jeep
-                        Japan -> Mazda
+getCarMarkByCountry a   | a == "Sweden" = Saab
+                        | a == "Germany" = Mercedes
+                        | a == "UK" = Lotus
+                        | a == "USA" = Jeep
+                        | a == "Japan" = Mazda
 
 -- b
 getCarAvgSpeed :: Moto -> Int
