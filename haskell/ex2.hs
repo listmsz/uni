@@ -1,34 +1,34 @@
 import Data.List
 
 --Zadanie 1
-revertList::[a]->[a]
-revertList []=[]
-revertList (x:xs)= revertList(xs)++[x]
+reverseList::[a]->[a]
+reverseList []=[]
+reverseList (x:xs)= reverseList(xs)++[x]
 
 --Zadanie 2
-swapFirstLast::[a]->[a]
-swapFirstLast []=[]
-swapFirstLast (x:xs)= last (xs):((init xs)++[x])
+swapFirstAndLast::[a]->[a]
+swapFirstAndLast []=[]
+swapFirstAndLast (x:xs)= last (xs):((init xs)++[x])
 
 --Zadanie 3
 --a)
-noEvenElements::[Integer]->Integer
-noEvenElements []=0
-noEvenElements (x:xs)|(x mod 2)==0=1+noEvenElements xs|otherwise=noEvenElements xs
+numberOfEvenElements::[Int]->Int
+numberOfEvenElements x = length (filter even x)
 
 --b)
 divisibleByThree::Int->Int
-divisibleByThree n|n<3=0
-divisibleByThree n=length([0,3..n])-1 
+divisibleByThree n | n<3=0
+                   | otherwise =length([0,3..n])-1 
 
 
 --c)
 sumDivisibleByThree::Int->Int
-sumDivisibleByThree n|n<3=0
-sumDivisibleByThree n=sum([0,3..n])
+sumDivisibleByThree n| n<3=0
+                     | otherwise =sum([0,3..n])
 
 --Zadanie 4
-isElementNoEven (x:xs)|length (x:xs) mod 2==0=True|otherwise=False
+isLengthEven:: [x] -> Bool
+isLengthEven x = even (length x)
 
 --Zadanie 5
 --a)
@@ -42,9 +42,9 @@ sqrList []=[]
 sqrList (x:xs)=[x^2]++sqrList xs
 
 --Zadanie 6
-countObject::Eq a=>a->[a]->Integer
-countObject a []=0
-countObject a (x:xs)| a==x=1+countObject a xs|otherwise=countObject a xs
+countElementInList :: Eq a => a -> [a] -> Int
+countElementInList x []=0
+countElementInList x y = length $ filter (x==) y
 
 --Zadanie 7
 duplicate::(a,Int)->[a]
@@ -57,9 +57,10 @@ isPalindrome []=True
 isPalindrome xs| xs==(reverse xs)=True|otherwise=False
 
 --Zadanie 9
-removeFirst::Eq a=>a->[a]->[a]
-removeFirst _ []=[]
-removeFirst a (x:xs)|a==x=xs|otherwise=x:(removeFirst a xs)
+removeFirstOccurence::Eq a=>a->[a]->[a]
+removeFirstOccurence _ []=[]
+removeFirstOccurence a (x:xs) | a==x =xs
+                              | otherwise =x:(removeFirstOccurence a xs)
 
 --Zadanie 10
 removeElement:: Int->[a]->[a]
@@ -69,8 +70,10 @@ removeElement n (x:xs)=x:(removeElement (n-1) xs)
 
 --Zadanie 11
 compareTwoLists::Eq a=>[a]->[a]->Bool
-compareTwoLists [x] (y:ys)|elem x (y:ys)=True|otherwise=False
-compareTwoLists (x:xs) (y:ys)| elem x (y:ys)=compareTwoLists xs (y:ys)|otherwise=False
+compareTwoLists [x] (y:ys) | elem x (y:ys) =True
+                           | otherwise =False
+compareTwoLists (x:xs) (y:ys) | elem x (y:ys)=compareTwoLists xs (y:ys)
+                              | otherwise=False
 
 --Zadanie 12
 revertTuples::[(a,b)]->[(b,a)]
