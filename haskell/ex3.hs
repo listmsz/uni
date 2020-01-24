@@ -85,3 +85,36 @@ postorder (Node a l r) = postorder l ++ postorder r ++ [a]
 -- [4,8,5,2,9,6,7,3,1]
 -- *Main> postorder tCh
 -- "fdbgeca"
+
+
+--Zadanie 4
+--a 
+treeMember a t = elem a (inorder t)
+--b
+treeMemberWithoutUsingElem e Empty = False
+treeMemberWithoutUsingElem e (Node a l r) = a == e || treeMemberWithoutUsingElem e l || treeMemberWithoutUsingElem e l
+
+--Zadanie 5
+--a 
+longestPathLength Empty = 0 
+longestPathLength (Node a Empty Empty) = 0 
+longestPathLength (Node a l r) = max (longestPathLength(l) + 1) (longestPathLength(r) + 1)
+
+-- b
+shortestPathLength Empty = 0
+shortestPathLength (Node a Empty Empty) = 0
+shortestPathLength (Node a l Empty) = shortestPathLength(l) + 1
+shortestPathLength (Node a Empty r) = shortestPathLength(r) + 1
+shortestPathLength (Node a l r) = 1 + min (shortestPathLength(l)) (shortestPathLength(r))
+
+--Zadanie 6
+pickNodesToPrint (Node _ Empty Empty) = []
+pickNodesToPrint (Node _ Empty b)     = [b]
+pickNodesToPrint (Node _ a Empty)     = [a]
+pickNodesToPrint (Node _ a b)         = [a,b]
+
+poziomo :: Tree a -> [a]
+poziomo tree = t [tree]
+    where
+        t [] = []
+        t xs = map (\(Node a _ _) -> a) xs ++ t (concat (map pickNodesToPrint xs)) 
