@@ -64,3 +64,8 @@ twoListsHaveSameElems x y = length x == length y && (length $ filter (`elem` y) 
 -- isSubtree Empty t2 = True
 -- isSubtree t1 Empty = False
 -- isSubtree t1 t2 = areTreeEqual(t1, t2) || isSubtree(t1, getLeftNode(t2)) || isSubtree(t1, getRightNode(t2))
+
+
+--Zadanie 8
+countElementInList x y = length $ filter (y==) x
+listToNumberOfElements x = zip (nub x) (map (\a -> countElementInList x a) (nub x))
