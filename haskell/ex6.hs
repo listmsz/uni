@@ -34,7 +34,7 @@ twoListsHaveSameElems x y = length x == length y && (length $ filter (`elem` y) 
 -- sort x y = 
 
 
---Zadanie 7
+--Zadanie 7 -–TODO
 -- data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show)
 
 -- getNodeValue (Node a l r) = a
@@ -69,3 +69,13 @@ twoListsHaveSameElems x y = length x == length y && (length $ filter (`elem` y) 
 --Zadanie 8
 countElementInList x y = length $ filter (y==) x
 listToNumberOfElements x = zip (nub x) (map (\a -> countElementInList x a) (nub x))
+
+--Zadanie 9 -–TODO
+
+--Zadanie 10
+bsort s = case innerBSort s of
+               t | t == s    -> t
+                 | otherwise -> bsort t
+  where innerBSort (x:x2:xs) | x > x2    = x2:(innerBSort (x:xs))
+                             | otherwise = x:(innerBSort (x2:xs))
+        innerBSort s = s
