@@ -30,34 +30,37 @@ twoListsAreEqual x y = (length x == length y) && (foldr (&&) True (zipWith (==) 
 --Zadanie 5
 twoListsHaveSameElems x y = length x == length y && (length $ filter (`elem` y) x) == length x
 
---Zadanie 6 --TODO
--- sort x y = 
+--Zadanie 6
+merge :: Ord a => [a] -> [a] -> [a]
+merge xs [] = xs
+merge [] ys = ys
+merge (x:xs) (y:ys) | x <= y    = x:merge xs (y:ys)
+                    | otherwise = y:merge (x:xs) ys
 
 
 --Zadanie 7 -–TODO
--- data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show)
+data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show)
 
--- getNodeValue (Node a l r) = a
--- getLeftNode (Node a l r) = l
--- getRightNode (Node a l r) = r
+getNodeValue (Node a l r) = a
+getLeftNode (Node a l r) = l
+getRightNode (Node a l r) = r
 
--- t =   
---     Node 1  
---         (Node 2  
---             (Node 4 Empty Empty)  
---             (Node 5 Empty (Node 8 Empty Empty)) 
---         )  
---         (Node 3  
---             (Node 6 Empty (Node 9 Empty Empty))
---             (Node 7 Empty Empty)
---         )
+t =   
+    Node 1  
+        (Node 2  
+            (Node 4 Empty Empty)  
+            (Node 5 Empty (Node 8 Empty Empty)) 
+        )  
+        (Node 3  
+            (Node 6 Empty (Node 9 Empty Empty))
+            (Node 7 Empty Empty)
+        )
 
--- wat Empty Empty = True
--- wat t1 Empty = False
--- wat Empty t2 = False
--- wat t1 t2 = (getNodeValue(t1) == getNodeValue(t2)) && (wat getLeftNode(t1) getLeftNode(t2)) && areTreeEqual(getRightNode(t1), getRightNode(t2))
-
-
+wat Empty Empty = True
+wat (Node a l r) Empty = False
+wat Empty (Node a l r) = False
+wat t1 t2 = (getNodeValue(t1) == getNodeValue(t2))
+-- && (wat getLeftNode(t1) getLeftNode(t2)) && areTreeEqual(getRightNode(t1), getRightNode(t2))
 
 
 -- isSubtree Empty Empty = True
@@ -70,7 +73,11 @@ twoListsHaveSameElems x y = length x == length y && (length $ filter (`elem` y) 
 countElementInList x y = length $ filter (y==) x
 listToNumberOfElements x = zip (nub x) (map (\a -> countElementInList x a) (nub x))
 
---Zadanie 9 -–TODO
+--Zadanie 9
+compareDstFn (a,b) (c,d) | sqrt (a^2 + b^2) > sqrt (c^2 + d^2) = GT
+                         | otherwise = LT
+
+orderByDistanceFromOX x = sortBy compareDstFn x
 
 --Zadanie 10
 bsort s = case innerBSort s of
