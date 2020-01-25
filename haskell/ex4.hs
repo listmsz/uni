@@ -13,6 +13,11 @@ import Data.List
     -- suma x y = nub (x ++ y)
     -- roznica x y = filter ((`notElem` y))x 
 
+--Zadanie 2
+-- Zadanie 2.
+-- Napisać funkcję, która dla drzewa binarnego d zwraca True, gdy drzewo ma w węzłach liczby całkowite i wszystkie elementy
+-- w lewym poddrzewie są mniejsze od liczby w korzeniu, a w prawym poddrzewie – większe.
+
 --Zadanie 3
 countElementInList x y = length $ filter (y==) x
 listToNumberOfElements x = zip (nub x) (map (\a -> countElementInList x a) (nub x))
